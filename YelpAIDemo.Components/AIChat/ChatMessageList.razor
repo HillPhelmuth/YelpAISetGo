@@ -1,0 +1,22 @@
+@namespace YelpAIDemo.YelpComponents.AIChat
+
+<div class="chat-list" role="log" aria-live="polite">
+    @if (Messages is null || Messages.Count == 0)
+    {
+        <div class="chat-empty text-body-secondary">
+            Send a message to start.
+        </div>
+    }
+    else
+    {
+        @foreach (var msg in Messages)
+        {
+            <div class="chat-row @GetRowClass(msg)">
+                <div class="chat-bubble @GetBubbleClass(msg)">
+                    <div class="chat-text">@msg.Text</div>
+                    <div class="chat-meta text-body-secondary">@msg.Timestamp.ToLocalTime().ToString("t")</div>
+                </div>
+            </div>
+        }
+    }
+</div>

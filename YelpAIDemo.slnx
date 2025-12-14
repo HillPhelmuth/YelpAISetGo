@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="YelpAIDemo.Components/YelpAIDemo.Components.csproj" Id="8277f840-78ff-4a30-8b7d-cc2a9ec8d44d" />
+  <Project Path="YelpAIDemo.ConsoleTests/YelpAIDemo.ConsoleTests.csproj" Id="9021e789-bd80-4345-8cc9-ef41981e59ec" />
+  <Project Path="YelpAIDemo.Core/YelpAIDemo.Core.csproj" Id="9bab8c9e-096e-4703-8499-c911f0decfb9" />
+  <Project Path="YelpAIDemo.Maps/YelpAIDemo.Maps.csproj" Id="1371e3bf-aa1c-4f02-8a20-fb72b916b5e8" />
+  <Project Path="YelpAIDemo/YelpAIDemo.csproj" />
+</Solution>

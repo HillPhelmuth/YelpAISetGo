@@ -1,0 +1,16 @@
+﻿@using System.Text.Json
+<h3>ChatLog</h3>
+
+<div class="log-container">
+    @foreach (var response in ChatResponses)
+    {
+        <details class="chat-response">
+            <summary>@response?.Response.Text</summary>
+            <pre>
+            <code>
+    @JsonSerializer.Serialize(@response, new JsonSerializerOptions() { WriteIndented = true })
+    </code>
+                    </pre>
+        </details>
+    }
+</div>

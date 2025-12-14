@@ -1,0 +1,29 @@
+@namespace YelpAIDemo.YelpComponents.AIChat
+
+<div class="chat-composer">
+    <div class="chat-input">
+        <textarea class="form-control"
+                  rows="3"
+                  placeholder="Type your message…"
+                  @bind="@Value"
+                  @bind:event="oninput"
+                  @onkeydown="OnKeyDown"
+                  disabled="@IsStreaming"></textarea>
+    </div>
+
+    <div class="chat-actions">
+        <button type="button"
+                class="btn btn-primary"
+                @onclick="Send"
+                disabled="@(!CanSend)">
+            Send
+        </button>
+
+        <button type="button"
+                class="btn btn-outline-secondary"
+                @onclick="Stop"
+                disabled="@(!IsStreaming)">
+            Stop
+        </button>
+    </div>
+</div>

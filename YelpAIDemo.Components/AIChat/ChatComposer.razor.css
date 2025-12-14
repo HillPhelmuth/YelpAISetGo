@@ -1,0 +1,18 @@
+.chat-composer {
+    border-top: 1px solid var(--bs-border-color);
+    padding: .75rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    background: var(--bs-body-bg);
+}
+
+.chat-actions {
+    display: flex;
+    gap: .5rem;
+    justify-content: flex-end;
+}
+
+.chat-input textarea {
+    resize: vertical;
+}
