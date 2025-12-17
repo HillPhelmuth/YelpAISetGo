@@ -1,5 +1,5 @@
 ## Elevator pitch (1-2 sentances)
-Wanderlust AI is a chat-first travel planner that turns a simple prompt into a personalized itinerary using real Yelp places, then helps you refine it and even book reservations.
+YelpAI Set Go! is a chat-first travel planner that turns a simple prompt into a personalized itinerary using real Yelp places, then helps you refine it and even book reservations.
 It’s your AI travel companion for discovering, planning, and navigating a trip end-to-end.
 
 ## Inspiration
@@ -7,7 +7,7 @@ Trip planning usually happens across too many tabs: “where should we eat?”, 
 We wanted to compress that whole workflow into a single conversation—powered by real business data—so you can plan a great trip without doing the busywork.
 
 ## What it does
-- Lets you chat with a primary travel agent (Wanderlust AI) to describe your trip, preferences, dates, and constraints.
+- Lets you chat with a primary travel agent (YelpAI Set Go!) to describe your trip, preferences, dates, and constraints.
 - Uses Yelp AI to discover real restaurants/attractions/services and summarize recommendations.
 - Generates a structured, day-by-day travel itinerary and displays it in an itinerary dashboard.
 - Saves itineraries in the browser and lets you reload a prior itinerary (optionally with its chat history).
@@ -49,7 +49,7 @@ We wanted to compress that whole workflow into a single conversation—powered b
 - Persisting agent threads makes the experience feel continuous—but requires careful UX around “clear session” vs “load history”.
 - Blazor Server + streaming is a strong fit for conversational UX when you throttle renders intentionally.
 
-## What's next for Wanderlust AI
+## What's next for YelpAI Set Go!
 - Add a first-class “edit itinerary” flow (inline swaps, drag/drop, and smarter constraints).
 - Improve booking UX (confirmations, error recovery, and clearer reservation summaries).
 - Expand map modes (walking/transit, multi-stop routing) and deeper itinerary-to-map visualization.
