@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Microsoft.Agents.AI;
 using YelpAIDemo.Core.Models;
 
 namespace YelpAIDemo.Core.Services;
@@ -12,7 +13,12 @@ public class AppState : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public Coordinates? UserLocation { get; set => SetField(ref field, value); }
+    public string? EstimatedUserAddress { get; set => SetField(ref field, value);
+    }
     public List<YelpAiResponse?> RecentYelpAiResponses { get; } = [];
+    public AgentThread? ActiveThread { get; set => SetField(ref field, value); }
+
+    public List<TravelItinerary?> RecentTravelItineraries { get; } = [];
     public YelpAiResponse? LatestYelpAiResponse
     {
         get;
@@ -23,6 +29,20 @@ public class AppState : INotifyPropertyChanged
                 RecentYelpAiResponses.RemoveAt(0);
             }
             RecentYelpAiResponses.Add(value);
+            SetField(ref field, value);
+        }
+    }
+
+    public TravelItinerary? LatestTravelItinerary
+    {
+        get;
+        set
+        {
+            if (RecentTravelItineraries.Count > 10)
+            {
+                RecentTravelItineraries.RemoveAt(0);
+            }
+            RecentTravelItineraries.Add(value);
             SetField(ref field, value);
         }
     }

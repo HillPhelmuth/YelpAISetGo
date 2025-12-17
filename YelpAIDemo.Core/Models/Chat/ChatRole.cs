@@ -1,4 +1,4 @@
-namespace YelpAIDemo.YelpComponents.AIChat;
+namespace YelpAIDemo.Core.Models.Chat;
 
 public enum ChatRole
 {

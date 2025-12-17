@@ -11,19 +11,27 @@ public partial class ChatComposer
     [Parameter] public bool Disabled { get; set; }
     [Parameter] public bool IsStreaming { get; set; }
 
+    [Parameter] public bool HasMessages { get; set; }
+
     [Parameter] public EventCallback<string> OnSend { get; set; }
     [Parameter] public EventCallback OnStop { get; set; }
 
-    private bool CanSend => !Disabled && !IsStreaming && !string.IsNullOrWhiteSpace(Value);
-
-    private async Task OnInput(ChangeEventArgs e)
+    private readonly string[] _suggestions =
     {
-        Value = e.Value?.ToString() ?? string.Empty;
-        await ValueChanged.InvokeAsync(Value);
-    }
+        "Foodie weekend in Portland",
+        "Family trip to San Diego",
+        "Romantic Paris getaway"
+    };
+
+    private bool CanSend => !Disabled && !IsStreaming && !string.IsNullOrWhiteSpace(Value);
 
     private async Task OnKeyDown(KeyboardEventArgs e)
     {
+        if (Disabled)
+        {
+            return;
+        }
+
         if (e is { Key: "Enter", ShiftKey: false })
         {
             await Send();
@@ -39,6 +47,7 @@ public partial class ChatComposer
 
         await OnSend.InvokeAsync(Value);
         Value = string.Empty;
+        await ValueChanged.InvokeAsync(Value);
         StateHasChanged();
     }
 
@@ -50,5 +59,12 @@ public partial class ChatComposer
         }
 
         await OnStop.InvokeAsync();
+    }
+
+    private async Task ApplySuggestion(string text)
+    {
+        Value = text;
+        await ValueChanged.InvokeAsync(Value);
+        StateHasChanged();
     }
 }

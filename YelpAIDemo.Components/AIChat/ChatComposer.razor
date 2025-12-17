@@ -1,29 +1,48 @@
 @namespace YelpAIDemo.YelpComponents.AIChat
 
-<div class="chat-composer">
-    <div class="chat-input">
-        <textarea class="form-control"
-                  rows="3"
-                  placeholder="Type your message…"
-                  @bind="@Value"
-                  @bind:event="oninput"
-                  @onkeydown="OnKeyDown"
-                  disabled="@IsStreaming"></textarea>
-    </div>
+<div class="chat-hero @(HasMessages ? "is-compact" : string.Empty)">
+    <div class="hero-content @(HasMessages ? "is-compact" : string.Empty)">
+        @if (!HasMessages)
+        {
+            <div class="powered">Powered by AI &amp; Yelp</div>
+            <h1>Your next great trip starts with a conversation.</h1>
+            <p class="hero-subtitle">Tell us where you're headed and what you love. We'll craft the perfect day-by-day itinerary instantly.</p>
+        }
 
-    <div class="chat-actions">
-        <button type="button"
-                class="btn btn-primary"
-                @onclick="Send"
-                disabled="@(!CanSend)">
-            Send
-        </button>
+        <div class="composer-bar">
+            <span class="spark">✦</span>
+            <input class="composer-input"
+                   type="text"
+                   placeholder="Where do you want to go? e.g., 'Foodie trip to Portland'"
+                   @bind="Value"
+                   @bind:event="oninput"
+                   @onkeydown="OnKeyDown"
+                   disabled="@(Disabled || IsStreaming)" />
 
-        <button type="button"
-                class="btn btn-outline-secondary"
-                @onclick="Stop"
-                disabled="@(!IsStreaming)">
-            Stop
-        </button>
+            <div class="composer-actions">
+                @if (IsStreaming)
+                {
+                    <button type="button" class="ghost-btn" @onclick="Stop">
+                        Stop
+                    </button>
+                }
+                <button type="button"
+                        class="send-btn"
+                        @onclick="Send"
+                        disabled="@(!CanSend)">
+                    →
+                </button>
+            </div>
+        </div>
+
+        @if (!HasMessages)
+        {
+            <div class="prompt-row" aria-label="Prompt suggestions">
+                @foreach (var suggestion in _suggestions)
+                {
+                    <button type="button" class="prompt-chip" @onclick="() => ApplySuggestion(suggestion)">@suggestion</button>
+                }
+            </div>
+        }
     </div>
 </div>

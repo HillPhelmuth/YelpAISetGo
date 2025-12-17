@@ -1,0 +1,87 @@
+@namespace YelpAIDemo.YelpComponents.Itinerary
+
+@using System.Linq
+@using YelpAIDemo.Core.Models
+
+<div class="itinerary-dashboard">
+    @if (Itinerary is null)
+    {
+        <div class="empty-state">
+            <div class="eyebrow">Itinerary</div>
+            <h2>Nothing planned yet</h2>
+            <p>Ask the agent to generate a travel plan, then return to see it styled here.</p>
+        </div>
+    }
+    else
+    {
+        <section class="hero-panel">
+            <div class="hero-copy">
+                <div class="eyebrow">Curated just for you</div>
+                <h1 class="hero-title">@Itinerary.Title</h1>
+                <p class="hero-summary">@(!string.IsNullOrWhiteSpace(Itinerary.Summary) ? Itinerary.Summary : "A balanced mix of can’t-miss stops and breathing room to explore.")</p>
+
+                <div class="hero-meta">
+                    @if (!string.IsNullOrWhiteSpace(Itinerary.Destination))
+                    {
+                        <span class="pill">@Itinerary.Destination</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Itinerary.StartDate) || !string.IsNullOrWhiteSpace(Itinerary.EndDate))
+                    {
+                        <span class="pill">@Itinerary.StartDate @if(!string.IsNullOrWhiteSpace(Itinerary.StartDate) || !string.IsNullOrWhiteSpace(Itinerary.EndDate)){<text>-</text>} @Itinerary.EndDate</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Itinerary.TimeZone))
+                    {
+                        <span class="pill">@Itinerary.TimeZone</span>
+                    }
+                </div>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <span class="label">Days</span>
+                    <span class="value">@((Itinerary.Items?.GroupBy(i => i.Day).Count()) ?? 0)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Stops</span>
+                    <span class="value">@(Itinerary.Items?.Count ?? 0)</span>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Last saved</span>
+                    <span class="value">@Itinerary.CreatedAt.ToShortDateString()</span>
+                </div>
+            </div>
+        </section>
+
+        @if (Itinerary.Items is null || Itinerary.Items.Count == 0)
+        {
+            <div class="empty-state muted">
+                <p>No items found in this itinerary.</p>
+            </div>
+        }
+        else
+        {
+            var groupedItems = Itinerary.Items.GroupBy(i => i.Day).ToList();
+            var dayIndex = 1;
+
+            <div class="day-stack">
+                @foreach (var group in groupedItems)
+                {
+                    <section class="day-section">
+                        <div class="day-marker">
+                            <div class="day-number">@dayIndex</div>
+                            <div class="day-label">@group.Key</div>
+                        </div>
+
+                        <div class="day-items">
+                            @foreach (var item in group)
+                            {
+                                <ItineraryCard Item="item" MapToItemRequested="MapToItemRequested" />
+                            }
+                        </div>
+                    </section>
+                    dayIndex++;
+                }
+            </div>
+        }
+    }
+</div>

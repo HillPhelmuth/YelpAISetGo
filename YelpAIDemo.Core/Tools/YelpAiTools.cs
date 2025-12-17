@@ -9,10 +9,12 @@ namespace YelpAIDemo.Core.Tools;
 public class YelpAiTools(YelpAIService yelpAIService, AppState appState)
 {
     [Description(YelpAiToolDescription)]
-    public async Task<string> SendYelpAIRequest([Description("The user's query for Yelp AI or response to the Yelp AI follow-up questions")]string query,[Description("The chat session indicator. Optional by default, but required to maintain context for multi-turn interactions")] string? chatSessionId = null)
+    public async Task<string> SendYelpAIRequest([Description("The user's query for Yelp AI or response to the Yelp AI follow-up questions")]string query,[Description("The chat session indicator received from the service. Optional by default, but required after the first interaction for successful multi-turn sessions. **Note:** Do not include unless you received a session id from the service already.")] string? chatSessionId = null)
     {
         var userLocation = appState.UserLocation;
         var request = new YelpAiRequest() { Query = query, ChatId = chatSessionId, UserContext = userLocation };
+        if (string.IsNullOrEmpty(chatSessionId))
+            request.ChatId = null;
         var response = await yelpAIService.SendRequestAsync(request);
         return JsonSerializer.Serialize(response, new JsonSerializerOptions {DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull});
     }

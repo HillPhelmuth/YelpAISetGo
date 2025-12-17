@@ -1,38 +1,75 @@
 ﻿@page "/primary-agent-chat"
 
-@using YelpAIDemo.YelpComponents.AIChat
-
-<PageTitle>Primary Agent Chat</PageTitle>
+<PageTitle>Travel Assistant</PageTitle>
 
 <div class="page">
-	<header class="page-header">
-		<h1 class="h3 mb-0">Primary Agent Chat</h1>
-		<div class="page-subtitle text-body-secondary">
-			Chat with the Yelp AI agent (streaming).
-		</div>
-	</header>
-
-	<div class="page-body">
-        <div class="chat" aria-label="Chat">
-            <ChatMessageList Messages="Messages" />
-
-            <ChatComposer @bind-Value="Input"
-                          Disabled="IsBusy"
-                          IsStreaming="IsBusy"
-                          OnSend="SendAsync"
-                          OnStop="Stop" />
+    <header class="page-header">
+        <h3 class="h3 mb-0 text-center">YelpAI Set Go!</h3>
+        <div class="page-subtitle text-body-secondary">
+            Your AI Travel Companion
         </div>
-        <div>
-            <ChatLog ChatResponses="AppState.RecentYelpAiResponses"></ChatLog>
+    </header>
+
+    <section class="panel-stack">
+        <div class="tab-strip" role="tablist" aria-label="Primary agent navigation">
+            <div class="tab-buttons">
+                <button class="tab-button @GetTabClass(Tab.Chat)" role="tab" aria-selected="@(_activeTab == Tab.Chat)" @onclick="() => SetTab(Tab.Chat)">
+                    Chat
+                </button>
+                <button class="tab-button @GetTabClass(Tab.Itinerary)" role="tab" aria-selected="@(_activeTab == Tab.Itinerary)" @onclick="() => SetTab(Tab.Itinerary)">
+                    Itinerary
+                    @if (_newItinerary && _activeTab != Tab.Itinerary)
+                    {
+                        <span class="itinerary-indicator"></span>
+                    }
+                </button>
+            </div>
+            <button type="button"
+                    class="menu-toggle"
+                    aria-label="Toggle menu"
+                    aria-controls="primary-menu-panel"
+                    aria-expanded="@_isMenuOpen"
+                    @onclick="ToggleMenu">
+                ☰
+            </button>
         </div>
-	</div>
+
+        <div class="page-body" @onclick="@(() => _isMenuOpen = false)">
+            @switch (_activeTab)
+            {
+                case Tab.Chat:
+                    <div class="chat" aria-label="Chat">
+                        @if (Messages is not null && Messages.Count > 0)
+                        {
+                            <ChatMessageList Messages="Messages" />
+                        }
+
+                        <ChatComposer @bind-Value="Input"
+                                      Disabled="IsBusy"
+                                      IsStreaming="IsBusy"
+                                      HasMessages="@(Messages is not null && Messages.Count > 0)"
+                                      OnSend="@((e) => SendAsync(e))"
+                                      OnStop="Stop" />
+                    </div>
+                    <div id="primary-menu-panel" class="menu-panel @(_isMenuOpen ? "open" : string.Empty)">
+                        <MenuPanel />
+                    </div>
+                    break;
+                case Tab.Itinerary:
+                    <div class="itinerary-surface">
+                        <ItineraryDashboard Itinerary="AppState.LatestTravelItinerary" MapToItemRequested="HandleItineraryMapRequested" />
+                    </div>
+                    break;
+            }
+        </div>
+    </section>
 </div>
 @if (_destination is not null)
 {
     <div class="map-modal-overlay">
         <div class="map-modal-content">
             <button class="map-modal-close-button" @onclick="() => _destination = null">✖️</button>
-            <MapViewer Destination="_destination"></MapViewer>
+            <MapViewer Destination="_destination" Display="@(_destination is not null)"></MapViewer>
         </div>
     </div>
 }

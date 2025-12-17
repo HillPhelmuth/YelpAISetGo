@@ -1,0 +1,69 @@
+@namespace YelpAIDemo.YelpComponents.Itinerary
+
+@using YelpAIDemo.Core.Models
+
+<div class="itinerary-card">
+    <div class="card-media" aria-hidden="true">
+        @if (!string.IsNullOrEmpty(Item.PhotoUrl))
+        {
+            <img src="@Item.PhotoUrl" alt="@Item.Title" class="media-image" />
+        }
+        else
+        {
+            <div class="media-accent">@(!string.IsNullOrWhiteSpace(Item.Category) ? Item.Category : "Explore")</div>
+        }
+       
+    </div>
+
+    <div class="card-main">
+        <div class="meta-row">
+            @if (!string.IsNullOrWhiteSpace(Item.StartTime) || !string.IsNullOrWhiteSpace(Item.EndTime))
+            {
+                <span class="chip time">@Item.StartTime@if(!string.IsNullOrWhiteSpace(Item.EndTime)){<text> - @Item.EndTime</text>}</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(Item.Day))
+            {
+                <span class="chip subtle">@Item.Day</span>
+            }
+        </div>
+
+        <h3 class="card-title">@Item.Title</h3>
+
+        @if (!string.IsNullOrWhiteSpace(Item.Description))
+        {
+            <p class="card-desc">@Item.Description</p>
+        }
+
+        <div class="chip-row">
+            @if (!string.IsNullOrWhiteSpace(Item.Category))
+            {
+                <span class="chip solid">@Item.Category</span>
+            }
+            @if (Item.Location is not null && !string.IsNullOrWhiteSpace(Item.Location.FormattedAddress))
+            {
+                <span class="chip muted">@Item.Location.FormattedAddress</span>
+            }
+            @if (!string.IsNullOrWhiteSpace(Item.Notes))
+            {
+                <span class="chip muted">@Item.Notes</span>
+            }
+        </div>
+
+        <div class="card-footer">
+            <div class="footer-meta">
+                @if (!string.IsNullOrWhiteSpace(Item.YelpBusinessIdOrAlias))
+                {
+                    <span class="meta">Ref: @Item.YelpBusinessIdOrAlias</span>
+                }
+            </div>
+
+            @if (Item.Location is not null && !string.IsNullOrWhiteSpace(Item.Location.FormattedAddress))
+            {
+                <button class="map-btn" @onclick="GetDirections" title="Get directions from your current location">
+                    <span>Map</span>
+                    <span class="arrow">→</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>

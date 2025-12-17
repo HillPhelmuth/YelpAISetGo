@@ -1,13 +1,22 @@
+using Blazored.LocalStorage;
 using YelpAIDemo.Components;
 using YelpAIDemo.Core.Helpers;
+using YelpAIDemo.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorComponents()
+var services = builder.Services;
+services.AddRazorComponents()
     .AddInteractiveServerComponents();
-builder.Services.AddHttpClient();
-builder.Services.AddYelpAIServices();
+services.AddSignalR(o =>
+{
+    o.MaximumReceiveMessageSize = null;
+});
+services.AddHttpClient();
+services.AddYelpAIServices();
+services.AddBlazoredLocalStorage();
+services.AddScoped<BrowserStorageService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

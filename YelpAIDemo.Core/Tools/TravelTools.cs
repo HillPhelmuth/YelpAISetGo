@@ -38,37 +38,42 @@ public class TravelTools
 }
 internal static class WeatherPluginExtensions
 {
-    public static string ToMarkdown(this WeatherForecast weatherForecast, string location)
+    extension(WeatherForecast weatherForecast)
     {
-        var weather = weatherForecast.Current;
-        var weatherForecastCurrentUnits = weatherForecast.CurrentUnits!;
-        var sb = new StringBuilder();
-        sb.AppendLine($"The weather in {location} is:");
-        sb.AppendLine($"- Weather Condition: {weather.Weathercode?.WeathercodeDescription()}");
-        sb.AppendLine($"- Temperature: {weather.Temperature}{weatherForecastCurrentUnits.Temperature}");
-        sb.AppendLine($"- Feels Like: {weather.Apparent_temperature}{weatherForecastCurrentUnits.Apparent_temperature}");
-        sb.AppendLine($"- Wind Speed: {weather.Windspeed_10m} {weatherForecastCurrentUnits.Windspeed_10m}");
-        sb.AppendLine($"- Wind Direction: {weather.Winddirection_10m} {weatherForecastCurrentUnits.Winddirection_10m}");
-        sb.AppendLine($"- Humidity: {weather.Relativehumidity_2m} {weatherForecastCurrentUnits.Relativehumidity_2m}");
-        sb.AppendLine($"- Precipitation: {weather.Precipitation} {weatherForecastCurrentUnits.Precipitation}");
-        sb.AppendLine($"- Pressure: {weather.Pressure_msl} {weatherForecastCurrentUnits.Pressure_msl}");
-        sb.AppendLine("");
-        sb.AppendLine($"{weatherForecast.ConvertWeatherForecastToMarkdownTable()}");
-        return sb.ToString();
-    }
-    public static string ConvertWeatherForecastToMarkdownTable(this WeatherForecast forecast)
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine("| Date       | Condition | Max Temp (°F) | Min Temp (°F) | Apparent Max Temp (°F) | Apparent Min Temp (°F) | Precipitation (mm) | Wind Speed (mph) | Sunrise  | Sunset  |");
-        sb.AppendLine("|------------|---------------|---------------|---------------|------------------------|------------------------|--------------------|------------------|----------|---------|");
-
-        for (int i = 0; i < forecast.Daily.Time.Length; i++)
+        public string ToMarkdown(string location)
         {
-            sb.AppendLine($"| {forecast.Daily.Time[i]} | {forecast.Daily.Weathercode?[i].WeathercodeDescription()} | {forecast.Daily.Temperature_2m_max?[i]} | {forecast.Daily.Temperature_2m_min?[i]} | {forecast.Daily.Apparent_temperature_max?[i]} | {forecast.Daily.Apparent_temperature_min?[i]} | {forecast.Daily.Precipitation_sum?[i]} | {forecast.Daily.Windspeed_10m_max?[i]} | {(forecast.Daily.Sunrise?[i])?[11..]} | {(forecast.Daily.Sunset?[i])?[11..]} |");
+            var weather = weatherForecast.Current;
+            var weatherForecastCurrentUnits = weatherForecast.CurrentUnits!;
+            var sb = new StringBuilder();
+            sb.AppendLine($"The weather in {location} is:");
+            sb.AppendLine($"- Weather Condition: {weather.Weathercode?.WeathercodeDescription()}");
+            sb.AppendLine($"- Temperature: {weather.Temperature}{weatherForecastCurrentUnits.Temperature}");
+            sb.AppendLine($"- Feels Like: {weather.Apparent_temperature}{weatherForecastCurrentUnits.Apparent_temperature}");
+            sb.AppendLine($"- Wind Speed: {weather.Windspeed_10m} {weatherForecastCurrentUnits.Windspeed_10m}");
+            sb.AppendLine($"- Wind Direction: {weather.Winddirection_10m} {weatherForecastCurrentUnits.Winddirection_10m}");
+            sb.AppendLine($"- Humidity: {weather.Relativehumidity_2m} {weatherForecastCurrentUnits.Relativehumidity_2m}");
+            sb.AppendLine($"- Precipitation: {weather.Precipitation} {weatherForecastCurrentUnits.Precipitation}");
+            sb.AppendLine($"- Pressure: {weather.Pressure_msl} {weatherForecastCurrentUnits.Pressure_msl}");
+            sb.AppendLine("");
+            sb.AppendLine($"{weatherForecast.ConvertWeatherForecastToMarkdownTable()}");
+            return sb.ToString();
         }
 
-        return sb.ToString();
+        public string ConvertWeatherForecastToMarkdownTable()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("| Date       | Condition | Max Temp (°F) | Min Temp (°F) | Apparent Max Temp (°F) | Apparent Min Temp (°F) | Precipitation (mm) | Wind Speed (mph) | Sunrise  | Sunset  |");
+            sb.AppendLine("|------------|---------------|---------------|---------------|------------------------|------------------------|--------------------|------------------|----------|---------|");
+
+            for (int i = 0; i < weatherForecast.Daily.Time.Length; i++)
+            {
+                sb.AppendLine($"| {weatherForecast.Daily.Time[i]} | {weatherForecast.Daily.Weathercode?[i].WeathercodeDescription()} | {weatherForecast.Daily.Temperature_2m_max?[i]} | {weatherForecast.Daily.Temperature_2m_min?[i]} | {weatherForecast.Daily.Apparent_temperature_max?[i]} | {weatherForecast.Daily.Apparent_temperature_min?[i]} | {weatherForecast.Daily.Precipitation_sum?[i]} | {weatherForecast.Daily.Windspeed_10m_max?[i]} | {(weatherForecast.Daily.Sunrise?[i])?[11..]} | {(weatherForecast.Daily.Sunset?[i])?[11..]} |");
+            }
+
+            return sb.ToString();
+        }
     }
+
     public static float ToFahrenheit(this float? celsius)
     {
         if (celsius == null)

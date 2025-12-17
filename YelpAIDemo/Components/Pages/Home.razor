@@ -2,6 +2,44 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, Yelp!</h1>
+<div class="page">
+	<header class="page-header">
+		<h1 class="page-title">YelpAI-Set-Go!</h1>
+		<div class="page-kicker">Your Personal AI Travel Companion</div>
+		<div class="page-subtitle text-body-secondary">
+			Dream it, chat it, explore it. Get personalized travel recommendations powered by Yelp and AI.
+		</div>
+	</header>
 
-<a href="/primary-agent-chat">Go to Primary Agent Chat</a>
+	<section class="panel-stack">
+		<div class="page-body">
+			<section class="home-hero" aria-label="Introduction">
+				<p class="lead mb-3">
+					Planning your next adventure has never been easier. Just tell us where you're headed and what you're into—whether it's foodie havens,
+					outdoor adventures, cultural hotspots, or hidden gems—and watch your perfect itinerary come to life.
+				</p>
+				<p class="mb-3">
+					Chat naturally about your trip: mention your destination, travel dates, interests, and budget. Our AI assistant instantly crafts
+					a personalized day-by-day plan featuring real places from Yelp. Want to adjust? Simply ask! Add more time here,
+					swap that restaurant, or find something more family-friendly—it's completely flexible.
+				</p>
+				<p class="mb-0">
+					<strong>Try saying:</strong> "Plan a foodie weekend in Portland" or "5-day family trip to San Diego with beaches and museums"
+				</p>
+
+                <div class="home-cta mt-4 start-btn" @onclick="@(() => NavigationManager.NavigateTo("primary-agent-chat"))">
+                    @* <NavLink class="start-btn" href="primary-agent-chat">Start Planning</NavLink> *@
+                    Start Planning
+					
+                </div><br/>
+					  <div style="justify-self:center" class="text-center"><span class="home-note">Your next great trip starts with a conversation</span></div>
+			</section>
+		</div>
+	</section>
+</div>
+@code
+{
+	[Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
+}
+

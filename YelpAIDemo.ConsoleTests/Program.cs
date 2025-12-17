@@ -19,7 +19,7 @@ var yelpAiService = serviceProvider.GetRequiredService<YelpAIService>();
 var request = new YelpAiRequest()
 {
     Query = "Kansas City Italian restaurant moderate upscale vegetarian options",
-    UserContext = new LocationCoordinates() { Latitude = 38.928384, Longitude = -94.591386 }
+    UserContext = new Coordinates() { Latitude = 38.928384f, Longitude = -94.591386f }
 };
 
 

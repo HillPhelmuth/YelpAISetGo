@@ -1,0 +1,102 @@
+@namespace YelpAIDemo.YelpComponents
+
+@using YelpAIDemo.Core.Models
+
+<aside class="menu-panel-root" aria-label="Saved itineraries" @onclick:stopPropagation>
+	<header class="menu-panel-header">
+		<h2 class="menu-panel-title">Saved Itineraries</h2>
+		<p class="menu-panel-subtitle">Pick one to load it into the session.</p>
+	</header>
+
+	<div class="menu-panel-actions">
+		<button type="button"
+				class="action-btn refresh-btn"
+				@onclick="ReloadAsync"
+				disabled="@(_isLoading || _isSelecting)">
+			<span class="btn-icon">🔄</span>
+			Refresh
+		</button>
+		<button type="button"
+				class="action-btn clear-btn"
+				@onclick="ClearSessionAsync"
+				disabled="@(_isClearing)">
+			@if (_isClearing)
+			{
+				<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+			}
+			else
+			{
+				<span class="btn-icon">✖</span>
+			}
+			Clear Session
+		</button>
+	</div>
+
+	<div class="menu-panel-options">
+		<label class="option-label">
+			<input type="checkbox" 
+				   class="option-checkbox" 
+				   id="includeAgentThread" 
+				   @bind="_includeAgentThread" />
+			<span class="option-text">Load chat history with itinerary</span>
+		</label>
+	</div>
+
+	@if (!string.IsNullOrWhiteSpace(_error))
+	{
+		<div class="alert alert-danger py-2 px-3 mb-2" role="alert">@_error</div>
+	}
+
+	@if (_isLoading)
+	{
+		<div class="d-flex align-items-center gap-2 text-body-secondary">
+			<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+			<span>Loading itineraries…</span>
+		</div>
+	}
+	else if (_itineraries.Count == 0)
+	{
+		<div class="text-body-secondary">
+			No saved itineraries yet.
+			<div class="small">Ask the agent to create one, then come back.</div>
+		</div>
+	}
+	else
+	{
+		<div class="menu-panel-list" role="listbox" aria-label="Itinerary list">
+			@foreach (var itinerary in _itineraries)
+			{
+				var active = IsActive(itinerary);
+				<button type="button"
+						class="menu-panel-item @(active ? "active" : "")"
+						role="option"
+						aria-selected="@(active)"
+						@onclick="() => SelectAsync(itinerary)"
+						disabled="@_isSelecting">
+					<div class="menu-panel-item-title">@(itinerary.Title ?? "Untitled itinerary")</div>
+					<div class="menu-panel-item-meta text-body-secondary">
+						@if (!string.IsNullOrWhiteSpace(itinerary.Destination))
+						{
+							<span>@itinerary.Destination</span>
+						}
+						@if (!string.IsNullOrWhiteSpace(itinerary.StartDate) || !string.IsNullOrWhiteSpace(itinerary.EndDate))
+						{
+							<span> • @itinerary.StartDate - @itinerary.EndDate</span>
+						}
+					</div>
+					<div class="menu-panel-item-meta text-body-secondary small">
+						Created @itinerary.CreatedAt.ToLocalTime().ToString("g")
+					</div>
+				</button>
+			}
+		</div>
+
+		@if (_isSelecting)
+		{
+			<div class="d-flex align-items-center gap-2 text-body-secondary mt-2">
+				<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+				<span>Loading selection…</span>
+			</div>
+		}
+	}
+</aside>

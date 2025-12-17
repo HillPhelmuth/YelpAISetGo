@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\YelpAIDemo.Components\YelpAIDemo.Components.csproj" />
-    <ProjectReference Include="..\YelpAIDemo.Maps\YelpAIDemo.Maps.csproj" />
   </ItemGroup>
 
 </Project>

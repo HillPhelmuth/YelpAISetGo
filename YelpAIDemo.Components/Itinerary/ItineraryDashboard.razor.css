@@ -1,0 +1,193 @@
+.itinerary-dashboard {
+	position: relative;
+	background: #ffffff;
+	padding: 1.5rem;
+	border-radius: 28px;
+	border: 1px solid rgba(0, 0, 0, 0.06);
+	box-shadow: 0 22px 45px rgba(0, 0, 0, 0.08);
+}
+
+.hero-panel {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+	gap: 1.5rem;
+	background: linear-gradient(135deg, #fff6ee 0%, #fefefe 60%, #f8f5ff 100%);
+	border-radius: 22px;
+	padding: 1.8rem 1.6rem;
+	border: 1px solid rgba(0, 0, 0, 0.04);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.hero-copy {
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+}
+
+.eyebrow {
+	font-size: 0.85rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: #c05c2f;
+	font-weight: 700;
+}
+
+.hero-title {
+	font-family: 'Playfair Display', serif;
+	font-size: clamp(2rem, 3vw, 2.6rem);
+	color: #ba6032;
+	margin: 0;
+}
+
+.hero-summary {
+	margin: 0;
+	color: #5f574f;
+	line-height: 1.6;
+}
+
+.hero-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 0.35rem;
+}
+
+.pill {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.45rem 0.8rem;
+	border-radius: 999px;
+	background: rgba(186, 96, 50, 0.09);
+	color: #7a4a26;
+	font-weight: 600;
+	font-size: 0.95rem;
+}
+
+.hero-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.75rem;
+	align-self: center;
+}
+
+.stat-card {
+	background: #ffffff;
+	border-radius: 16px;
+	padding: 0.9rem 1rem;
+	border: 1px solid rgba(0, 0, 0, 0.05);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.stat-card .label {
+	color: #837a72;
+	font-size: 0.9rem;
+}
+
+.stat-card .value {
+	font-weight: 700;
+	font-size: 1.35rem;
+	color: #2f2a25;
+}
+
+.day-stack {
+	margin-top: 1.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.day-section {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 1rem 1.25rem;
+	align-items: start;
+}
+
+.day-marker {
+	display: grid;
+	grid-template-columns: auto;
+	justify-items: center;
+	gap: 0.45rem;
+}
+
+.day-number {
+	width: 2.6rem;
+	height: 2.6rem;
+	border-radius: 50%;
+	background: linear-gradient(145deg, #c05c2f, #d97c4c);
+	color: #fff;
+	font-weight: 800;
+	display: grid;
+	place-items: center;
+	box-shadow: 0 10px 20px rgba(192, 92, 47, 0.35);
+}
+
+.day-label {
+	font-family: 'Playfair Display', serif;
+	font-size: 1rem;
+	color: #5a4f44;
+	text-align: center;
+}
+
+.day-items {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.empty-state {
+	background: #fff8ef;
+	border-radius: 20px;
+	padding: 1.3rem 1.2rem;
+	border: 1px dashed rgba(186, 96, 50, 0.4);
+	text-align: left;
+	color: #5f574f;
+}
+
+.empty-state h2 {
+	margin: 0.15rem 0;
+	font-family: 'Playfair Display', serif;
+}
+
+.empty-state.muted {
+	background: #f9f7f4;
+	border-color: rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 960px) {
+	.hero-panel {
+		grid-template-columns: 1fr;
+	}
+
+	.hero-stats {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.day-section {
+		grid-template-columns: 1fr;
+	}
+
+	.day-marker {
+		justify-items: start;
+		grid-template-columns: auto auto;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.day-label {
+		text-align: left;
+	}
+}
+
+@media (max-width: 640px) {
+	.hero-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.stat-card {
+		padding: 0.8rem 0.9rem;
+	}
+}
