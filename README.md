@@ -1,6 +1,4 @@
-## Elevator pitch (1-2 sentances)
-YelpAI Set Go! is a chat-first travel planner that turns a simple prompt into a personalized itinerary using real Yelp places, then helps you refine it and even book reservations.
-It’s your AI travel companion for discovering, planning, and navigating a trip end-to-end.
+# YelpAI Set Go!
 
 ## Inspiration
 Trip planning usually happens across too many tabs: “where should we eat?”, “what’s nearby?”, “can we get a table?”, “how far is that from where we are?”.
