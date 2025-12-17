@@ -59,6 +59,9 @@
                     <div class="itinerary-surface">
                         <ItineraryDashboard Itinerary="AppState.LatestTravelItinerary" MapToItemRequested="HandleItineraryMapRequested" />
                     </div>
+                    <div id="primary-menu-panel" class="menu-panel @(_isMenuOpen ? "open" : string.Empty)">
+                        <MenuPanel />
+                    </div>
                     break;
             }
         </div>
