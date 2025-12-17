@@ -65,7 +65,7 @@ public sealed class ItineraryTools(IConfiguration configuration, AppState appSta
         };
 
         appState.LatestTravelItinerary = itinerary;
-        //await itineraryStore.SaveLatestAsync(itinerary, cancellationToken);
+        await itineraryStore.SaveLatestAsync(itinerary, cancellationToken);
 
         return itinerary;
     }
@@ -77,6 +77,7 @@ public sealed class ItineraryTools(IConfiguration configuration, AppState appSta
             return "Nope! You must first create an itinerary using the CreateItinerary tool.";
         }
         appState.LatestTravelItinerary = itinerary;
+        _ = itineraryStore.SaveLatestAsync(itinerary);
         return "Itinerary updated successfully.";
     }
     private static string BuildItineraryAgentInstructions(string instructions, string? destination, string? startDate, int? numberOfDays, string? timeZone, List<BusinessSimple> businesses)
